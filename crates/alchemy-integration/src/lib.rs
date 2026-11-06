@@ -17,6 +17,7 @@ mod tests {
             Oubr: alchemy_oubr,
             Bundle: alchemy_bundle,
             Treasury: alchemy_treasury,
+            Pricing: alchemy_pricing,
             Oracle: alchemy_oracle,
         }
     );
@@ -65,6 +66,9 @@ mod tests {
         type RuntimeEvent = RuntimeEvent;
     }
     impl alchemy_bundle::Config for TestRuntime {
+        type RuntimeEvent = RuntimeEvent;
+    }
+    impl alchemy_pricing::Config for TestRuntime {
         type RuntimeEvent = RuntimeEvent;
     }
     impl alchemy_treasury::Config for TestRuntime {
@@ -138,6 +142,7 @@ mod tests {
             alchemy_bundle::Pallet::<TestRuntime>::create_bundle(
                 frame_system::RawOrigin::Signed(5).into(),
                 debt_id,
+                1,
             )
             .unwrap();
             let bundles: Vec<_> = (1..=alchemy_bundle::Pallet::<TestRuntime>::get_bundle(1)
@@ -216,6 +221,7 @@ mod tests {
             frame_system::Pallet::<TestRuntime>::set_block_number(100001);
             alchemy_bundle::Pallet::<TestRuntime>::create_bundle(
                 frame_system::RawOrigin::Signed(3).into(),
+                1,
                 1,
             )
             .unwrap();
@@ -316,6 +322,43 @@ mod tests {
             .unwrap();
             let o = alchemy_oubr::Pallet::<TestRuntime>::get_oubr(oid).unwrap();
             assert_eq!(o.current_price, 200);
+        });
+    }
+
+    #[test]
+    fn bundle_rejects_mirror_currency() {
+        new_ext().execute_with(|| {
+            let signal = alchemy_tartarus_primitives::DebtSignal {
+                oracle: 1u64,
+                debtor: 2u64,
+                token: 1,
+                debt_amount: 1000,
+                dealing_currency: 1,
+                timestamp: 0,
+            };
+            alchemy_oracle::Pallet::<TestRuntime>::submit_debt_signal(
+                frame_system::RawOrigin::Signed(1).into(),
+                signal,
+            )
+            .unwrap();
+            alchemy_mirror::Pallet::<TestRuntime>::start_mirror(
+                frame_system::RawOrigin::Signed(2).into(),
+                1,
+                vec![40u128; 10],
+            )
+            .unwrap();
+            assert!(alchemy_bundle::Pallet::<TestRuntime>::create_bundle(
+                frame_system::RawOrigin::Signed(5).into(),
+                1,
+                11,
+            )
+            .is_err());
+            alchemy_bundle::Pallet::<TestRuntime>::create_bundle(
+                frame_system::RawOrigin::Signed(5).into(),
+                1,
+                1,
+            )
+            .unwrap();
         });
     }
 }

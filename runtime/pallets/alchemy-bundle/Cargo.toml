@@ -13,6 +13,7 @@ alchemy-tartarus-primitives = { path = "../alchemy-tartarus-primitives", default
 alchemy-mirror = { path = "../alchemy-mirror", default-features = false }
 alchemy-oubr = { path = "../alchemy-oubr", default-features = false }
 alchemy-treasury = { path = "../alchemy-treasury", default-features = false }
+alchemy-pricing = { path = "../alchemy-pricing", default-features = false }
 
 [features]
 default = ["std"]
@@ -26,4 +27,5 @@ std = [
     "alchemy-mirror/std",
     "alchemy-oubr/std",
     "alchemy-treasury/std",
+    "alchemy-pricing/std",
 ]

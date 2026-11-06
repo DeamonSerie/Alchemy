@@ -300,6 +300,15 @@ pub mod pallet {
                 .unwrap_or(0)
         }
 
+        pub fn is_mirror_token(token_id: TokenId) -> bool {
+            for (_, m) in MirrorNfts::<T>::iter() {
+                if m.tokens.iter().any(|t| t.token_id == token_id) {
+                    return true;
+                }
+            }
+            false
+        }
+
         pub fn debt_mirror_id(debt_id: DebtId) -> Option<MirrorId> {
             DebtMirror::<T>::get(debt_id)
         }

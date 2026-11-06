@@ -21,7 +21,7 @@ pub mod pallet {
 
     #[pallet::config]
     pub trait Config:
-        frame_system::Config + alchemy_mirror::Config + alchemy_oubr::Config + alchemy_treasury::Config
+        frame_system::Config + alchemy_mirror::Config + alchemy_oubr::Config + alchemy_treasury::Config + alchemy_pricing::Config
     {
         type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
     }
@@ -76,13 +76,18 @@ pub mod pallet {
         SaleEnded,
         SaleNotEnded,
         AlreadyFinalized,
+        MirrorTokenNotAllowed,
     }
 
     #[pallet::call]
     impl<T: Config> Pallet<T> {
         #[pallet::weight(10_000)]
-        pub fn create_bundle(origin: OriginFor<T>, debt_id: DebtId) -> DispatchResult {
+        pub fn create_bundle(origin: OriginFor<T>, debt_id: DebtId, currency_id: CurrencyId) -> DispatchResult {
             let _ = ensure_signed(origin)?;
+            ensure!(
+                !alchemy_mirror::Pallet::<T>::is_mirror_token(currency_id),
+                Error::<T>::MirrorTokenNotAllowed
+            );
             let now: u64 = frame_system::Pallet::<T>::block_number().saturated_into();
 
             // compute bundle amount
@@ -119,7 +124,6 @@ pub mod pallet {
             }
 
             let id = BundleCount::<T>::get() + 1;
-            let currency_id = id as u32;
             let sale_end = now.saturating_add(40 * 60); // seconds? blocks? treat as time units
             let bundle = Bundle {
                 id,
@@ -161,7 +165,7 @@ pub mod pallet {
 
         #[pallet::weight(10_000)]
         pub fn finalize(origin: OriginFor<T>, bundle_id: BundleId) -> DispatchResult {
-            let _ = origin;
+            let who = ensure_signed(origin)?;
             let now: u64 = frame_system::Pallet::<T>::block_number().saturated_into();
             let mut b = Bundles::<T>::get(bundle_id).ok_or(Error::<T>::BundleNotFound)?;
             ensure!(b.status == BundleStatus::Sale, Error::<T>::AlreadyFinalized);
@@ -171,6 +175,10 @@ pub mod pallet {
             let unsold = b.amount.saturating_sub(total_bet.min(b.amount));
             if unsold > 0 {
                 alchemy_treasury::Pallet::<T>::credit(b.currency_id, unsold);
+                alchemy_pricing::TokenBalances::<T>::mutate(b.currency_id as u64, &who, |bal| {
+                    let cur = bal.unwrap_or(0);
+                    *bal = Some(cur.saturating_add(unsold));
+                });
                 Self::deposit_event(Event::TreasuryCredited {
                     currency_id: b.currency_id,
                     amount: unsold,

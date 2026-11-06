@@ -16,6 +16,7 @@ alchemy-mirror = { path = "../../runtime/pallets/alchemy-mirror", default-featur
 alchemy-oubr = { path = "../../runtime/pallets/alchemy-oubr", default-features = false }
 alchemy-bundle = { path = "../../runtime/pallets/alchemy-bundle", default-features = false }
 alchemy-treasury = { path = "../../runtime/pallets/alchemy-treasury", default-features = false }
+alchemy-pricing = { path = "../../runtime/pallets/alchemy-pricing", default-features = false }
 alchemy-oracle = { path = "../../runtime/pallets/alchemy-oracle", default-features = false }
 
 [features]
@@ -33,5 +34,6 @@ std = [
     "alchemy-oubr/std",
     "alchemy-bundle/std",
     "alchemy-treasury/std",
+    "alchemy-pricing/std",
     "alchemy-oracle/std",
 ]

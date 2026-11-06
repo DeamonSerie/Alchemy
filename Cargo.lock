@@ -79,6 +79,7 @@ version = "0.1.0"
 dependencies = [
  "alchemy-mirror",
  "alchemy-oubr",
+ "alchemy-pricing",
  "alchemy-tartarus-primitives",
  "alchemy-treasury",
  "frame-support",
@@ -134,6 +135,7 @@ dependencies = [
  "alchemy-mirror",
  "alchemy-oracle",
  "alchemy-oubr",
+ "alchemy-pricing",
  "alchemy-tartarus-primitives",
  "alchemy-treasury",
  "frame-support",
