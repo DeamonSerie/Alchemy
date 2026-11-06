@@ -1,0 +1,29 @@
+[package]
+name = "alchemy-bundle"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+frame-support = { version = "49.0.1", default-features = false }
+frame-system = { version = "49.0.0", default-features = false }
+sp-runtime = { version = "49.0.0", default-features = false }
+codec = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
+scale-info = { version = "2", default-features = false, features = ["derive"] }
+alchemy-tartarus-primitives = { path = "../alchemy-tartarus-primitives", default-features = false }
+alchemy-mirror = { path = "../alchemy-mirror", default-features = false }
+alchemy-oubr = { path = "../alchemy-oubr", default-features = false }
+alchemy-treasury = { path = "../alchemy-treasury", default-features = false }
+
+[features]
+default = ["std"]
+std = [
+    "frame-support/std",
+    "frame-system/std",
+    "sp-runtime/std",
+    "codec/std",
+    "scale-info/std",
+    "alchemy-tartarus-primitives/std",
+    "alchemy-mirror/std",
+    "alchemy-oubr/std",
+    "alchemy-treasury/std",
+]

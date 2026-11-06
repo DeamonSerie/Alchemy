@@ -1,0 +1,17 @@
+[package]
+name = "alchemy-legacy-node"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+alchemy-core = { path = "../alchemy-core" }
+alchemy-ledger = { path = "../alchemy-ledger" }
+alchemy-token = { path = "../alchemy-token" }
+alchemy-consensus-legacy = { path = "../alchemy-consensus-legacy" }
+alchemy-vm = { path = "../alchemy-vm" }
+serde = { version = "1", features = ["derive"] }
+bincode = "1"
+thiserror = "1"
+
+[[bin]]
+name = "alchemy-legacy-node"

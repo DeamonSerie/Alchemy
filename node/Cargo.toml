@@ -1,0 +1,11 @@
+[package]
+name = "alchemy-node"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+alchemy-legacy-node = { path = "../crates/alchemy-legacy-node" }
+
+[[bin]]
+name = "alchemy-node"
+path = "src/main.rs"

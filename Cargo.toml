@@ -1,0 +1,28 @@
+[workspace]
+members = ["crates/*", "runtime", "runtime/pallets/*", "node"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+
+[package]
+name = "alchemy"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alchemy-core = { path = "crates/alchemy-core" }
+alchemy-ledger = { path = "crates/alchemy-ledger" }
+alchemy-token = { path = "crates/alchemy-token" }
+alchemy-consensus-legacy = { path = "crates/alchemy-consensus-legacy" }
+alchemy-vm = { path = "crates/alchemy-vm" }
+alchemy-legacy-node = { path = "crates/alchemy-legacy-node" }
+alchemy-node = { path = "node" }
+
+[[bin]]
+name = "set-node"
+path = "src/main.rs"
+
+[dev-dependencies]
+tempfile = "3"

@@ -1,0 +1,78 @@
+[package]
+name = "alchemy-runtime"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+codec = { package = "parity-scale-codec", version = "3.7", default-features = false, features = ["derive"] }
+scale-info = { version = "2.11", default-features = false, features = ["derive"] }
+frame-support = { version = "49.0", default-features = false }
+frame-system = { version = "49.0", default-features = false }
+frame-executive = { version = "49.0", default-features = false }
+sp-api = { version = "44.0", default-features = false }
+sp-block-builder = { version = "44.0", default-features = false }
+sp-core = { version = "43.0", default-features = false }
+sp-inherents = { version = "44.0", default-features = false }
+sp-offchain = { version = "44.0", default-features = false }
+sp-runtime = { version = "49.0", default-features = false }
+sp-session = { version = "46.0", default-features = false }
+sp-std = { version = "14.0", default-features = false }
+sp-transaction-pool = { version = "44.0", default-features = false }
+sp-version = { version = "47.0", default-features = false }
+pallet-balances = { version = "51.0", default-features = false }
+pallet-timestamp = { version = "49.0", default-features = false }
+pallet-sudo = { version = "50.0", default-features = false }
+pallet-transaction-payment = { version = "50.0", default-features = false }
+pallet-aura = { version = "49.0", default-features = false }
+pallet-grandpa = { version = "50.0", default-features = false }
+pallet-contracts = { version = "51.0", default-features = false }
+alchemy-pricing = { path = "pallets/alchemy-pricing", default-features = false }
+alchemy-consensus = { path = "pallets/alchemy-consensus", default-features = false }
+alchemy-tan = { path = "pallets/alchemy-tan", default-features = false }
+alchemy-time = { path = "pallets/alchemy-time", default-features = false }
+alchemy-mirror = { path = "pallets/alchemy-mirror", default-features = false }
+alchemy-oubr = { path = "pallets/alchemy-oubr", default-features = false }
+alchemy-treasury = { path = "pallets/alchemy-treasury", default-features = false }
+alchemy-oracle = { path = "pallets/alchemy-oracle", default-features = false }
+alchemy-bundle = { path = "pallets/alchemy-bundle", default-features = false }
+alchemy-tartarus-primitives = { path = "pallets/alchemy-tartarus-primitives", default-features = false }
+
+[dev-dependencies]
+sp-io = { version = "49.0" }
+
+[features]
+default = ["std"]
+std = [
+    "codec/std",
+    "scale-info/std",
+    "frame-support/std",
+    "frame-system/std",
+    "frame-executive/std",
+    "sp-api/std",
+    "sp-block-builder/std",
+    "sp-core/std",
+    "sp-inherents/std",
+    "sp-offchain/std",
+    "sp-runtime/std",
+    "sp-session/std",
+    "sp-std/std",
+    "sp-transaction-pool/std",
+    "sp-version/std",
+    "pallet-balances/std",
+    "pallet-timestamp/std",
+    "pallet-sudo/std",
+    "pallet-transaction-payment/std",
+    "pallet-aura/std",
+    "pallet-grandpa/std",
+    "pallet-contracts/std",
+    "alchemy-pricing/std",
+    "alchemy-consensus/std",
+    "alchemy-tan/std",
+    "alchemy-time/std",
+"alchemy-mirror/std",
+"alchemy-oubr/std",
+"alchemy-treasury/std",
+"alchemy-oracle/std",
+"alchemy-bundle/std",
+"alchemy-tartarus-primitives/std",
+]

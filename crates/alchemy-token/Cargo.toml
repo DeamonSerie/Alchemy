@@ -1,0 +1,10 @@
+[package]
+name = "alchemy-token"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+alchemy-core = { path = "../alchemy-core" }
+alchemy-ledger = { path = "../alchemy-ledger" }
+serde = { version = "1", features = ["derive"] }
+thiserror = "1"

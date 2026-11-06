@@ -1,0 +1,11 @@
+[package]
+name = "alchemy-ledger"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+alchemy-core = { path = "../alchemy-core" }
+serde = { version = "1", features = ["derive"] }
+bincode = "1"
+crc32fast = "1.5"
+thiserror = "1"
